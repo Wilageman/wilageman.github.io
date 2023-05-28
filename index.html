@@ -223,62 +223,59 @@
                 <div class="primary-button">
                     <button id="load-more-btn">Load More</button>
                 </div>
-                    <script>
-                        // Your Instagram access token
-                        const accessToken = 'https://v1.nocodeapi.com/wilageman/instagram/vlfapnSpVUbjgcQX';
-                    
-                        // Number of images to fetch per request
-                        const numImagesPerRequest = 9;
-                    
-                        // Instagram API endpoint
-                        const apiUrl = `https://graph.instagram.com/me/media?fields=media_url&access_token=${accessToken}&limit=${numImagesPerRequest}`;
-                    
-                        // Load more button
-                        const loadMoreBtn = document.getElementById('load-more-btn');
-                        let nextUrl = null; // Next page URL for pagination
-                    
-                        // Function to fetch Instagram images
-                        const fetchInstagramImages = (url) => {
-                          fetch(url)
-                            .then(response => response.json())
-                            .then(data => {
-                              const gridContainer = document.querySelector('.grid');
-                    
-                              // Iterate over the fetched images
-                              data.data.forEach(image => {
-                                const imgElement = document.createElement('img');
-                                imgElement.src = image.media_url;
-                    
-                                const gridItem = document.createElement('div');
-                                gridItem.classList.add('grid-item');
-                                gridItem.appendChild(imgElement);
-                    
-                                gridContainer.appendChild(gridItem);
-                              });
-                    
-                              // Check if there are more images to load
-                              if (data.paging && data.paging.next) {
-                                nextUrl = data.paging.next;
-                                loadMoreBtn.disabled = false;
-                              } else {
-                                nextUrl = null;
-                                loadMoreBtn.disabled = true;
-                              }
-                            })
-                            .catch(error => {
-                              console.error('Error fetching Instagram images:', error);
-                            });
-                        };
-                    
-                        // Load more button click event handler
-                        loadMoreBtn.addEventListener('click', () => {
-                          loadMoreBtn.disabled = true;
-                          fetchInstagramImages(nextUrl);
-                        });
-                    
-                        // Initial fetch of Instagram images
-                        fetchInstagramImages(apiUrl);
-                      </script>
+		<script>
+		    // Number of images to fetch per request
+		    const numImagesPerRequest = 9;
+
+		    // Instagram API endpoint
+		    const apiUrl = `https://v1.nocodeapi.com/wilageman/instagram/vlfapnSpVUbjgcQX?limit=${numImagesPerRequest}`;
+
+		    // Load more button
+		    const loadMoreBtn = document.getElementById('load-more-btn');
+		    let nextUrl = null; // Next page URL for pagination
+
+		    // Function to fetch Instagram images
+		    const fetchInstagramImages = (url) => {
+			fetch(url)
+			    .then(response => response.json())
+			    .then(data => {
+				const gridContainer = document.querySelector('.grid');
+
+				// Iterate over the fetched images
+				data.data.forEach(image => {
+				    const imgElement = document.createElement('img');
+				    imgElement.src = image.media_url;
+
+				    const gridItem = document.createElement('div');
+				    gridItem.classList.add('grid-item');
+				    gridItem.appendChild(imgElement);
+
+				    gridContainer.appendChild(gridItem);
+				});
+
+				// Check if there are more images to load
+				if (data.paging && data.paging.next) {
+				    nextUrl = data.paging.next;
+				    loadMoreBtn.disabled = false;
+				} else {
+				    nextUrl = null;
+				    loadMoreBtn.disabled = true;
+				}
+			    })
+			    .catch(error => {
+				console.error('Error fetching Instagram images:', error);
+			    });
+		    };
+
+		    // Load more button click event handler
+		    loadMoreBtn.addEventListener('click', () => {
+			loadMoreBtn.disabled = true;
+			fetchInstagramImages(nextUrl);
+		    });
+
+		    // Initial fetch of Instagram images
+		    fetchInstagramImages(apiUrl);
+		</script>
 
 
                 <div class="section-heading">
